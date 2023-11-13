@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 
 import "./globals.css";
+import { ConvexClientProvider, ThemeProvider } from "@/components/providers";
 
 const nunito = Nunito({ subsets: ["latin"] });
 
@@ -16,8 +17,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={nunito.className}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={nunito.className}>
+        <ConvexClientProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+            storageKey="notion-theme-2"
+          >
+            {children}
+          </ThemeProvider>
+        </ConvexClientProvider>
+      </body>
     </html>
   );
 }
